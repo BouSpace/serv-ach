@@ -20,6 +20,7 @@ class Panier(models.Model):
 
 class LigneAchat(models.Model):
     article = models.ForeignKey(Article, on_delete=models.DO_NOTHING,default=0)
+    panier = models.ForeignKey(Client, on_delete=models.CASCADE,default=0)
     prixUnitaire = models.FloatField('Prix unitaire',default=0)
     quantite = models.IntegerField(default=0)
     

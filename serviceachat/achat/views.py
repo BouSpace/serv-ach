@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import clientSerializer, articleSerializer, panierSerializer, lignAchatSerializer
-from .models import Article, Client
+from .models import Article, Client, LigneAchat, Panier
 
     # Create your views here.
 
@@ -87,3 +87,84 @@ def delArticle(request,id):
     article.delete()
     return Response('Suppression effectuée avec succès !!')
 
+
+#------------------------------#
+#     API GESTION DE PANIER    #
+#------------------------------#
+@api_view(['GET'])
+def allClientPanier(request,client_id):
+    paniers = Panier.objects.all()
+    serialization = panierSerializer(paniers,many=True)
+    return Response(serialization.data)
+
+# -------------------------------
+@api_view(['GET'])
+def getPanier(request,id):
+    panier = Panier.objects.get(id=id)
+    Panier.objects
+    serializer = panierSerializer(panier)
+    return Response(serializer.data)
+
+# -------------------------------
+@api_view(['POST'])
+def addPanier(request):
+    serializer = panierSerializer(data = request.data, many = True)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+# -------------------------------
+@api_view(['PUT'])
+def updPanier(request,id):
+    panier = Panier.objects.get(id=id)
+    serializer = panierSerializer(instance = panier, data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+    
+ #-------------------------------
+@api_view(['DELETE'])
+def delPanier(request,id):
+    panier = Panier.objects.get(id=id)
+    panier.delete()
+    return Response('Suppression effectuée avec succès !!')
+
+#-----------------------------------#
+#     API GESTION DE LIGNE ACHAT    #
+#-----------------------------------#
+@api_view(['GET'])
+def allLigneAchat(request,panier_id):
+    ligneAchats = LigneAchat.objects.all()
+    serialization = lignAchatSerializer(ligneAchats,many=True)
+    return Response(serialization.data)
+
+# -------------------------------
+@api_view(['GET'])
+def getLigneAchat(request,id):
+    panier = Panier.objects.get(id=id)
+    serializer = lignAchatSerializer(panier)
+    return Response(serializer.data)
+
+# -------------------------------
+@api_view(['POST'])
+def addLigneAchat(request):
+    serializer = lignAchatSerializer(data = request.data, many = True)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+# -------------------------------
+@api_view(['PUT'])
+def updLigneAchat(request,id):
+    panier = Panier.objects.get(id=id)
+    serializer = lignAchatSerializer(instance = panier, data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+    
+ #-------------------------------
+@api_view(['DELETE'])
+def delLigneAchat(request,id):
+    panier = Panier.objects.get(id=id)
+    panier.delete()
+    return Response('Suppression effectuée avec succès !!')
