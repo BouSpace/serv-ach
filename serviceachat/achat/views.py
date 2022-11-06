@@ -92,16 +92,15 @@ def delArticle(request,id):
 #     API GESTION DE PANIER    #
 #------------------------------#
 @api_view(['GET'])
-def allClientPanier(request,client_id):
+def allClientPanier(request):
     paniers = Panier.objects.all()
     serialization = panierSerializer(paniers,many=True)
     return Response(serialization.data)
 
 # -------------------------------
 @api_view(['GET'])
-def getPanier(request,id):
-    panier = Panier.objects.get(id=id)
-    Panier.objects
+def getPanier(request,client_id):
+    panier = Panier.objects.filter(client__id=client_id)
     serializer = panierSerializer(panier)
     return Response(serializer.data)
 
@@ -134,7 +133,7 @@ def delPanier(request,id):
 #-----------------------------------#
 @api_view(['GET'])
 def allLigneAchat(request,panier_id):
-    ligneAchats = LigneAchat.objects.all()
+    ligneAchats = LigneAchat.objects.filter(Panier__id=panier_id)
     serialization = lignAchatSerializer(ligneAchats,many=True)
     return Response(serialization.data)
 
@@ -156,8 +155,8 @@ def addLigneAchat(request):
 # -------------------------------
 @api_view(['PUT'])
 def updLigneAchat(request,id):
-    panier = Panier.objects.get(id=id)
-    serializer = lignAchatSerializer(instance = panier, data = request.data)
+    lignAchat = LigneAchat.objects.get(id=id)
+    serializer = lignAchatSerializer(instance = lignAchat, data = request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
