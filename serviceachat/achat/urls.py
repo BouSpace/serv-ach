@@ -9,7 +9,7 @@ from drf_yasg.views import get_schema_view
 
 schema_view = get_schema_view(
     openapi.Info(
-        title='MaterProm/2022-2023 - Service Web TP',
+        title='MaterProm-2022-2023 - Service Web TP',
         default_version='1.0.0',
         description="Service achat en ligne\n\n**TEAM GROUP num**\n*BOUSSIM Issa*\n*GANAME Ali*\n*NACOULMA Judion*\n*SAKANDE Odile*\n*SORO Adam*",
         terms_of_service='https://policies.google.com/terms',
@@ -37,7 +37,18 @@ urlpatterns = [
     path('updarticle/<int:id>/',views.updArticle),
     path('deletearticle/<int:id>/',views.delArticle),
 
+    #------- Lien API Panier ----------
+    path('paniers/',views.allClientPanier),
+    path('panier/<int:client_id>/',views.getPanier),
+    path('addPanier/',views.addPanier),
+    path('updarticle/<int:id>/',views.updArticle),
+    path('deletearticle/<int:id>/',views.delArticle),
+    path('achatClient/<int:panier_id>/',views.allLigneAchat),
+
+    path('achatclt/',views.listAchat),
+
     #path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('swagger',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',cache_timeout=0),name='schema-redoc'),
 ]

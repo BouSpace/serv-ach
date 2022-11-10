@@ -2,7 +2,7 @@ from http import client
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import clientSerializer, articleSerializer, panierSerializer, lignAchatSerializer
+from .serializers import clientSerializer, articleSerializer, panierSerializer, lignAchatSerializer, LigneAchat
 from .models import Article, Client, LigneAchat, Panier
 
     # Create your views here.
@@ -10,6 +10,18 @@ from .models import Article, Client, LigneAchat, Panier
 #------------------------------#
 #     API GESTION DE CLIENT    #
 #------------------------------#
+
+@api_view(['POST'])
+def addClient(request):
+    serializer = clientSerializer(data = request.data, many = True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response("Impossible d'ajouter ce client")
+    
+
+# -------------------------------
 @api_view(['GET'])
 def allClients(request):
     clients = Client.objects.all()
@@ -24,21 +36,16 @@ def getclient(request,id):
     return Response(serializer.data)
 
 # -------------------------------
-@api_view(['POST'])
-def addClient(request):
-    serializer = clientSerializer(data = request.data, many = True)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
-
-# -------------------------------
 @api_view(['PUT'])
 def updClient(request,id):
     client = Client.objects.get(id=id)
     serializer = clientSerializer(instance = client, data = request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+        return Response(serializer.data)
+    else:
+        return Response("Erreur de mise a jour")
+    
 
  #-------------------------------
 @api_view(['DELETE'])
@@ -92,10 +99,22 @@ def delArticle(request,id):
 #     API GESTION DE PANIER    #
 #------------------------------#
 @api_view(['GET'])
+def listAchat(request):
+    paniers = Panier.objects.prefetch_related('panier').all()
+    serialization = lignAchatSerializer(paniers, many = True)
+    return Response(serialization.data)
+
+@api_view(['GET'])
 def allClientPanier(request):
     paniers = Panier.objects.all()
     serialization = panierSerializer(paniers,many=True)
     return Response(serialization.data)
+
+#@api_view(['GET'])
+#def allAchatPanier(request):
+#    achpanier = LigneAchat.objects.prefetch_related().all()
+#    serialization = (achpanier,many=True)
+#    return Response(serialization.data)
 
 # -------------------------------
 @api_view(['GET'])
@@ -133,9 +152,16 @@ def delPanier(request,id):
 #-----------------------------------#
 @api_view(['GET'])
 def allLigneAchat(request,panier_id):
-    ligneAchats = LigneAchat.objects.filter(Panier__id=panier_id)
+    ligneAchats = LigneAchat.objects.filter(panier__id=panier_id)
     serialization = lignAchatSerializer(ligneAchats,many=True)
     return Response(serialization.data)
+
+@api_view(['GET'])
+def achlist(request):
+    ligneAch = Panier.objects.prefetch_related('entetevte')
+    serialization = lignAchatSerializer(ligneAch,many=True)
+    return Response(serialization.data)
+
 
 # -------------------------------
 @api_view(['GET'])
