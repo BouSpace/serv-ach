@@ -1,7 +1,7 @@
 """serviceachat URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
+    https://docs.djangoproject.com/fr/4.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+#from . import views
 
 urlpatterns = [
-    path('', admin.site.urls),
+#    path('', admin.site.urls),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+#    path('api-auth/', include('rest_framework.urls')),
+#    path('api/login', views.login),
     path('api/', include('achat.urls')),
 ]

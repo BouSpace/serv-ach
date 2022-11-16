@@ -12,25 +12,26 @@ class articleSerializer(serializers.ModelSerializer):
         model = Article
         fields = '__all__'
 
+"""
 class lignAchatSerializer(serializers.ModelSerializer):
     class Meta:
-        depth = 0
+        depth = 1
         model = LigneAchat
         fields = '__all__'
-
-#class lignAchatSerializer(serializers.ModelSerializer):
-#    class Meta:
-#        model = LigneAchat
-#        fields = '__all__' #['id','prixUnitaire','quantite']
 
 class panierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Panier
         fields = '__all__'
+"""
+class lignAchatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LigneAchat
+        fields = ['id','prixUnitaire','quantite']
 
-#class panierSerializer(serializers.ModelSerializer):
-#    panier = lignAchatSerializer(many=True)
+class panierSerializer(serializers.ModelSerializer):
+    paniers = lignAchatSerializer(many=True, read_only=True)
 
-#    class Meta:
-#        model = Panier
-#        fields = '__all__'
+    class Meta:
+        model = Panier
+        fields = ["id",'date','reference','statut','paniers']

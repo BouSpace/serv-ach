@@ -18,7 +18,7 @@ schema_view = get_schema_view(
         
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,)
+#    permission_classes=(permissions.AllowAny,)
 )
 
 urlpatterns = [
@@ -33,22 +33,23 @@ urlpatterns = [
     #------- Lien API Article ----------
     path('articles/',views.allArticles),
     path('article/<int:id>/',views.getArticle),
-    path('addarticle/',views.addArticle),
+    path('addarticles/',views.addArticle),
     path('updarticle/<int:id>/',views.updArticle),
     path('deletearticle/<int:id>/',views.delArticle),
 
     #------- Lien API Panier ----------
     path('paniers/',views.allClientPanier),
-    path('panier/<int:client_id>/',views.getPanier),
-    path('addPanier/',views.addPanier),
-    path('updarticle/<int:id>/',views.updArticle),
+    path('panier/<int:id>/',views.getPanier),
+    path('addpanier/',views.addPanier),
+    path('updpanier/<int:id>/',views.updArticle),
     path('deletearticle/<int:id>/',views.delArticle),
     path('achatClient/<int:panier_id>/',views.allLigneAchat),
 
-    path('achatclt/',views.listAchat),
+    path('achatclt/',views.achlist),
 
     #path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
+#    path('',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('swagger',schema_view.with_ui('swagger', cache_timeout=0),name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',cache_timeout=0),name='schema-redoc'),
+    #path('login/',views.login),
 ]

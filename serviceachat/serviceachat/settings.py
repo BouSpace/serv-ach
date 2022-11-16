@@ -7,7 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.1/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/4.1/ref/settings/
+https://docs.djangoproject.com/fr/4.1/ref/settings/
 """
 
 from pathlib import Path
@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+# See https://docs.djangoproject.com/fr/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-y02oimp2t@e%ftgu19k4@c1yd3q=0k@lgoztsp%#i7b&%_-q0&'
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'achat',
     'rest_framework',
     'drf_yasg',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
+#    'rest_framework.authtoken',
+#    'dj_rest_auth',
 ]
 
 MIDDLEWARE = [
@@ -72,7 +72,6 @@ ROOT_URLCONF = 'serviceachat.urls'
 #    'PAGE_SIZE': 100,
 #
 #    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#
 #}
 
 TEMPLATES = [
@@ -95,7 +94,7 @@ WSGI_APPLICATION = 'serviceachat.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+# https://docs.djangoproject.com/fr/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -106,13 +105,13 @@ DATABASES = {
 
 #DATABASES = {
 #    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'serviceAchat',
-#        'USER': 'bianlu',
-#        'PASSWORD': 'P@2sw0rd+Sql',
-#        'HOST': 'bianlu.mysql.pythonanywhere-services.com',
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'serviceachat',
+#        'USER': 'django',
+#        'PASSWORD': 'Dj@ng0',
+#        'HOST': 'localhost',
 #        'PORT': '5432',
- #   }
+#    }
 #}
 
 
