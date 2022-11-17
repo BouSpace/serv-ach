@@ -143,6 +143,14 @@ def allClientPanier(request):
     serialization = panierSerializer(paniers,many=True)
     return Response(serialization.data)
 
+@api_view(['GET'])
+def panierValide(request, id):
+    panier = Panier.objects.get(id=id)
+    panier.statut = True
+    panier.save()
+    return Response('Panier valide avec succes !')
+
+
 #@api_view(['GET'])
 #def allAchatPanier(request):
 #    achpanier = LigneAchat.objects.prefetch_related().all()
@@ -195,8 +203,8 @@ def delPanier(request,id):
 #     API GESTION DE LIGNE ACHAT    #
 #-----------------------------------#
 @api_view(['GET'])
-def allLigneAchat(request,panier_id):
-    ligneAchats = LigneAchat.objects.filter(panier__id=panier_id)
+def allLigneAchat(request):
+    ligneAchats = LigneAchat.objects.all()
     serialization = lignAchatSerializer(ligneAchats,many=True)
     return Response(serialization.data)
 
@@ -227,9 +235,12 @@ def updLigneAchat(request,id):
     
  #-------------------------------
 @api_view(['DELETE'])
-def delLigneAchat(request,id):
-    panier = Panier.objects.get(id=id)
-    panier.delete()
-    return Response('Suppression effectuée avec succès !!')
-
-
+def delLigneAchat(request,panier_id,article_id):
+    achat = LigneAchat.objects.filter(panier_id=panier_id,article_id=article_id)
+    panier = Panier.objects.get(id=panier_id)
+    if panier.statut==True:
+        return Response({"Detail": "Suppression impossible, achat deja valide "})
+    else:
+        achat.delete()
+        return Response({"Detail":"Suppression effectuée avec succès !!"})
+    

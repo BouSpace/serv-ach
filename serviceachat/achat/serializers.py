@@ -12,10 +12,10 @@ class articleSerializer(serializers.ModelSerializer):
         model = Article
         fields = '__all__'
 
-"""
+
 class lignAchatSerializer(serializers.ModelSerializer):
     class Meta:
-        depth = 1
+        depth = 0
         model = LigneAchat
         fields = '__all__'
 
@@ -23,6 +23,7 @@ class panierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Panier
         fields = '__all__'
+        
 """
 class lignAchatSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,3 +36,4 @@ class panierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Panier
         fields = ["id",'date','reference','statut','paniers']
+"""
